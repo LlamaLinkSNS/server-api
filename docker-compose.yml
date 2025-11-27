@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+
+  app:
+    build:
+      context: ./docker/php
+    container_name: laravel_app
+    volumes:
+      - ./server:/var/www/html
+    networks:
+      - laravel
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    container_name: nginx_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./server:/var/www/html
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: server
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel
+
+volumes:
+  mysql_data:
+
+
+networks:
+  laravel:
