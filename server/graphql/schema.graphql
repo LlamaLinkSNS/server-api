@@ -1,0 +1,80 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"A date string with format `Y-m-d`, e.g. `2018-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"Indicates what fields are available at the top level of a query operation."
+type Query {
+    "Obtener todos los usuarios con paginación"
+    users(
+        first: Int! = 10
+        page: Int
+    ): [User!]! @paginate(defaultCount: 10)
+
+    "Obtener un usuario por ID"
+    user(id: ID! @eq): User @find
+
+    "Buscar usuario por username"
+    userByUsername(username: String! @eq): User @find
+}
+
+"Account mutation operations."
+type Mutation {
+    "Crear un nuevo usuario"
+    createUser(input: CreateUserInput! @spread): User! @create
+
+    "Actualizar un usuario existente"
+    updateUser(id: ID!, input: UpdateUserInput! @spread): User! @update
+
+    "Eliminar un usuario"
+    deleteUser(id: ID! @whereKey): User! @delete
+}
+
+"Información de un usuario"
+type User {
+    id: ID!
+    name: String!
+    username: String!
+    email: String!
+    pronouns: String
+    date_of_birth: Date!
+    biography: String
+    avatar_path: String
+    cover_image_path: String
+    social_networks: [String!]
+    social_network_usernames: [String!]
+    email_verified_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+"Input para crear usuario"
+input CreateUserInput {
+    name: String! @rules(apply: ["required", "string", "min:2", "max:60", "regex:/^[\\pL\\sáéíóúÁÉÍÓÚñÑ]+$/u", "App\\Rules\\NoOffensiveWords"])
+    username: String! @rules(apply: ["required", "string", "min:3", "max:20", "regex:/^[a-zA-Z0-9._-]+$/", "unique:users,username", "App\\Rules\\NoOffensiveWords"])
+    email: String! @rules(apply: ["required", "email", "unique:users,email"])
+    password: String! @rules(apply: ["required", "string", "min:8"]) @hash
+    pronouns: String @rules(apply: ["nullable", "string", "min:2", "max:20"])
+    date_of_birth: Date! @rules(apply: ["required", "date", "before:today"])
+    biography: String @rules(apply: ["nullable", "string", "max:500", "App\\Rules\\NoOffensiveWords"])
+    avatar_path: String @rules(apply: ["nullable", "string"])
+    cover_image_path: String @rules(apply: ["nullable", "string"])
+    social_networks: [String!] @rules(apply: ["nullable", "array"])
+    social_network_usernames: [String!] @rules(apply: ["nullable", "array"])
+}
+
+"Input para actualizar usuario"
+input UpdateUserInput {
+    name: String @rules(apply: ["string", "min:2", "max:60", "regex:/^[\\pL\\sáéíóúÁÉÍÓÚñÑ]+$/u", "App\\Rules\\NoOffensiveWords"])
+    username: String @rules(apply: ["string", "min:3", "max:20", "regex:/^[a-zA-Z0-9._-]+$/", "App\\Rules\\NoOffensiveWords"])
+    email: String @rules(apply: ["email"])
+    password: String @rules(apply: ["string", "min:8"]) @hash
+    pronouns: String @rules(apply: ["nullable", "string", "min:2", "max:20"])
+    date_of_birth: Date @rules(apply: ["date", "before:today"])
+    biography: String @rules(apply: ["nullable", "string", "max:500", "App\\Rules\\NoOffensiveWords"])
+    avatar_path: String @rules(apply: ["nullable", "string"])
+    cover_image_path: String @rules(apply: ["nullable", "string"])
+    social_networks: [String!] @rules(apply: ["nullable", "array"])
+    social_network_usernames: [String!] @rules(apply: ["nullable", "array"])
+}
