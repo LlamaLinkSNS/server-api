@@ -1,37 +1,26 @@
-"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-"A date string with format `Y-m-d`, e.g. `2018-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
-"Indicates what fields are available at the top level of a query operation."
 type Query {
-    "Obtener todos los usuarios con paginación"
     users(
         first: Int! = 10
         page: Int
     ): [User!]! @paginate(defaultCount: 10)
 
-    "Obtener un usuario por ID"
     user(id: ID! @eq): User @find
 
-    "Buscar usuario por username"
     userByUsername(username: String! @eq): User @find
 }
 
-"Account mutation operations."
 type Mutation {
-    "Crear un nuevo usuario"
     createUser(input: CreateUserInput! @spread): User! @create
 
-    "Actualizar un usuario existente"
     updateUser(id: ID!, input: UpdateUserInput! @spread): User! @update
 
-    "Eliminar un usuario"
     deleteUser(id: ID! @whereKey): User! @delete
 }
 
-"Información de un usuario"
 type User {
     id: ID!
     name: String!
@@ -49,7 +38,6 @@ type User {
     updated_at: DateTime!
 }
 
-"Input para crear usuario"
 input CreateUserInput {
     name: String! @rules(apply: ["required", "string", "min:2", "max:60", "regex:/^[\\pL\\sáéíóúÁÉÍÓÚñÑ]+$/u", "App\\Rules\\NoOffensiveWords"])
     username: String! @rules(apply: ["required", "string", "min:3", "max:20", "regex:/^[a-zA-Z0-9._-]+$/", "unique:users,username", "App\\Rules\\NoOffensiveWords"])
@@ -64,7 +52,6 @@ input CreateUserInput {
     social_network_usernames: [String!] @rules(apply: ["nullable", "array"])
 }
 
-"Input para actualizar usuario"
 input UpdateUserInput {
     name: String @rules(apply: ["string", "min:2", "max:60", "regex:/^[\\pL\\sáéíóúÁÉÍÓÚñÑ]+$/u", "App\\Rules\\NoOffensiveWords"])
     username: String @rules(apply: ["string", "min:3", "max:20", "regex:/^[a-zA-Z0-9._-]+$/", "App\\Rules\\NoOffensiveWords"])

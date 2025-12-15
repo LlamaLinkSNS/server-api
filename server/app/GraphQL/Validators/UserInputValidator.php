@@ -170,7 +170,6 @@ class UserInputValidator extends Validator
     {
         $blacklist = array_map('mb_strtolower', $this->getBadWords());
 
-        // Obtener los datos del input desde el validador
         $data = $validator->getData();
         $input = $data['input'] ?? [];
 
