@@ -14,131 +14,78 @@ class NoOffensiveWords implements ValidationRule
     {
         $badWords = [
 
-            'idio
-           ta',
-            'imbeci
-           l',
-            'estu
-           pido',
-            'to
-           nto',
-            'ta
-           rado',
+            'idiota',
+            'imbecil',
+            'estupido',
+            'tonto',
+            'tarado',
             'menso',
             'pendejo',
-
-            'gilipo
-           llas',
-            'cab
-           ron',
-            'capu
-           llo',
-            'm
-           aricon',
+            'gilipollas',
+            'cabron',
+            'capullo',
+            'maricon',
             'puto',
             'puta',
-
-            'conchet
-           umare',
-            '
-           carajo',
+            'conchetumare',
+            'carajo',
             'verga',
             'coño',
             'joder',
             'mierda',
-
-
             'cagar',
-            'cag
-           ada',
-            'malpari
-           do',
+            'cagada',
+            'malparido',
             'hijodeputa',
             'desgraciado',
-
-            'b
-           astardo',
+            'bastardo',
             'culero',
-            '
-           picha',
-            'gono
-           rrea',
+            'picha',
+            'gonorrea',
             'pendejada',
             'baboso',
-
-            '
-           boludo',
-            '
-           pelotudo
-           ',
-            'follar
-           ',
+            'boludo',
+            'pelotudo',
+            'follar',
             'sexo',
             'sexual',
             'porno',
-
-            'por
-           nografia',
-            'o
-           rgasmo',
-            'masturba
-           r',
+            'pornografia',
+            'orgasmo',
+            'masturbar',
             'pene',
             'vagina',
             'clitoris',
-
-
-            'c
-           oito',
-            'an
-           al',
+            'coito',
+            'anal',
             'oral',
             'condon',
             'esperma',
             'eyacular',
             'ereccion',
-
-            'pro
-           stituta',
-            '
-           prostibulo',
+            'prostituta',
+            'prostibulo',
             'venerea',
             'pedofilo',
             'violar',
-
-
             'pederasta',
             'reputis',
-            're
-           pajolero',
+            'repajolero',
             'coprofagia',
             'zoofilia',
-
-            '
-           necrofili
-           a',
-            'pedof
-           ilia',
-            'p
-           olla',
+            'necrofilia',
+            'pedofilia',
+            'polla',
             'cipote',
             'nalga',
-            'te
-           tas',
-
-            'c
-           ulo',
-            'paj
-           ero',
-            'pajil
-           la',
+            'tetas',
+            'culo',
+            'pajero',
+            'pajilla',
             'mamada',
             'correrse',
-            'espermatozoi
-           de',
-
-            'jo
-           dido',
+            'espermatozoide',
+            'jodido',
             'jodida',
             'jodidos',
             'jodidas',
